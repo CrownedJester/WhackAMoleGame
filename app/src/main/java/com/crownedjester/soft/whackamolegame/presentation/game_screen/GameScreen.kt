@@ -63,26 +63,23 @@ fun GameScreen() {
         )
 
         Column(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Column(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 6.dp),
-
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Text(
-                    text = "Score: $count",
-                    style = MaterialTheme.typography.h6,
-                    fontWeight = Bold
+                    text = "Score: $count", style = MaterialTheme.typography.h6, fontWeight = Bold
                 )
 
                 Text(
-                    text = "00:${if (timerState.value < 10) "0${timerState.value}" else timerState.value}",
+                    text = "00:" + timerState.value.toSecondsString(),
                     style = MaterialTheme.typography.h6,
                     fontWeight = Bold
                 )
@@ -92,11 +89,11 @@ fun GameScreen() {
 
             LazyVerticalGrid(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
+                    .padding(horizontal = 12.dp)
+                    .fillMaxWidth(),
                 cells = GridCells.Fixed(3),
-                horizontalArrangement = Arrangement.SpaceAround,
-                verticalArrangement = Arrangement.spacedBy(28.dp)
+                horizontalArrangement = Arrangement.spacedBy(24.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
 
                 items(9) { i ->
@@ -109,8 +106,7 @@ fun GameScreen() {
             }
 
             Text(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 text = "Smack Them!",
                 style = MaterialTheme.typography.h4,
                 fontWeight = Bold,
@@ -123,3 +119,9 @@ fun GameScreen() {
     }
 
 }
+
+private fun Int.toSecondsString(): String =
+    if (this < 10)
+        "0$this"
+    else
+        this.toString()
