@@ -38,39 +38,35 @@ class GameViewModel : ViewModel() {
             initSpawner()
                 .onCompletion { _currentRevealedMole.value = -1 }
                 .collect {
-
-                }
+                //todo nothing
+            }
         }
     }
 
     private fun initSpawner(time: Int = 30, delay: Long = 1000) =
-        (time * (1000 / delay.toInt()) downTo 0).asFlow()
-            .onEach {
-                val number = Random.nextInt(0, 9)
+        (time * (1000 / delay.toInt()) downTo 0).asFlow().onEach {
+            val number = Random.nextInt(0, 9)
 
-                _currentRevealedMole.emit(number)
+            _currentRevealedMole.emit(number)
 
-                delay(delay)
+            delay(delay)
 
-                Log.i("ViewModel", _currentRevealedMole.value.toString())
-            }.conflate()
+            _currentRevealedMole.emit(-1)
+
+            Log.i("ViewModel", _currentRevealedMole.value.toString())
+        }.conflate()
 
     private fun runTimer() {
         viewModelScope.launch {
-            initTimer()
-                .collect {
-                    _timerStateFlow.emit(it)
-                }
+            initTimer().collect {
+                _timerStateFlow.emit(it)
+            }
         }
     }
 
-    private fun initTimer(time: Int = 30) =
-        (time downTo 0 step 1).asFlow()
-            .onStart {
-                _timerStateFlow.emit(time)
-            }
-            .onEach {
-                delay(1000)
-            }
-            .conflate()
+    private fun initTimer(time: Int = 30) = (time downTo 0 step 1).asFlow().onStart {
+        _timerStateFlow.emit(time)
+    }.onEach {
+        delay(1000)
+    }.conflate()
 }

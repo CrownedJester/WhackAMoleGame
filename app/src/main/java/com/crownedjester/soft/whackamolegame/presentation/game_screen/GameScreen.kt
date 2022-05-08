@@ -2,18 +2,16 @@ package com.crownedjester.soft.whackamolegame.presentation.game_screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
@@ -23,27 +21,22 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.crownedjester.soft.whackamolegame.R
 import com.crownedjester.soft.whackamolegame.presentation.game_screen.components.MoleItem
+import com.crownedjester.soft.whackamolegame.ui.theme.LightOrange
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GameScreen() {
 
     val viewModel = viewModel<GameViewModel>()
+
     val currentRevealedMoleState by viewModel.currentRevealedMole.collectAsState()
     val timerState = viewModel.timerStateFlow.collectAsState()
 
     val count = viewModel.tappedMoleCount.value
 
-    val hammerOffset = remember { mutableStateOf(Offset(0f, 0f)) }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .pointerInput(Unit) {
-                detectTapGestures {
-                    hammerOffset.value = it
-                }
-            }
     ) {
         Image(
             modifier = Modifier
@@ -52,14 +45,6 @@ fun GameScreen() {
             contentScale = ContentScale.FillBounds,
             painter = painterResource(id = R.drawable.grass_2),
             contentDescription = "game background"
-        )
-
-        Image(
-            modifier = Modifier
-                .size(48.dp)
-                .offset(hammerOffset.value.x.dp, hammerOffset.value.y.dp),
-            painter = painterResource(id = R.drawable.mole_frame_5),
-            contentDescription = "hammer"
         )
 
         Column(
@@ -107,10 +92,10 @@ fun GameScreen() {
 
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = "Smack Them!",
+                text = "Beat Them!",
                 style = MaterialTheme.typography.h4,
                 fontWeight = Bold,
-                color = Color(0xFFFFD600),
+                color = LightOrange,
                 textAlign = TextAlign.Center
             )
 

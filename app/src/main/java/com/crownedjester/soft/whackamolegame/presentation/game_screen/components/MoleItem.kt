@@ -2,15 +2,14 @@ package com.crownedjester.soft.whackamolegame.presentation.game_screen.component
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -20,13 +19,7 @@ import com.crownedjester.soft.whackamolegame.R
 @Composable
 fun MoleItem(moleIndex: Int, isAppeared: Boolean, onClick: (Int) -> Unit) {
 
-    val transition = updateTransition(targetState = isAppeared, label = null)
-
-    val contentSize by transition.animateDp(label = "") {
-        if (it) 108.dp else 84.dp
-    }
-
-    Box(modifier = Modifier.size(contentSize)) {
+    Box(modifier = Modifier.size(72.dp)) {
 
         AnimatedContent(targetState = isAppeared,
             transitionSpec = {
@@ -38,7 +31,7 @@ fun MoleItem(moleIndex: Int, isAppeared: Boolean, onClick: (Int) -> Unit) {
 
             Image(
                 modifier = Modifier
-                    .size(contentSize)
+                    .fillMaxSize()
                     .clickable {
                         if (isAppeared) {
                             onClick(moleIndex)
