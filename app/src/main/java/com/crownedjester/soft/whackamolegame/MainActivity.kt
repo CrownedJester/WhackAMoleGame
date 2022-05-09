@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.crownedjester.soft.whackamolegame.presentation.game_screen.GameScreen
+import com.crownedjester.soft.whackamolegame.presentation.result_screen.ResultScreen
 import com.crownedjester.soft.whackamolegame.presentation.start_screen.GameStartScreen
 import com.crownedjester.soft.whackamolegame.presentation.util.Screen
 import com.crownedjester.soft.whackamolegame.ui.theme.WhackAMoleGameTheme
@@ -32,12 +33,19 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Screen.GameStartScreen.route
                     ) {
+
                         composable(Screen.GameStartScreen.route) {
                             GameStartScreen(navController = navController)
                         }
+
                         composable(Screen.GameMainScreen.route) {
                             GameScreen()
                         }
+
+                        composable(Screen.GameResultScreen.route) {
+                            ResultScreen(navController = navController)
+                        }
+
                     }
 
                 }
