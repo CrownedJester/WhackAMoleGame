@@ -15,6 +15,7 @@ import com.crownedjester.soft.whackamolegame.presentation.result_screen.ResultSc
 import com.crownedjester.soft.whackamolegame.presentation.start_screen.GameStartScreen
 import com.crownedjester.soft.whackamolegame.presentation.util.Screen
 import com.crownedjester.soft.whackamolegame.ui.theme.WhackAMoleGameTheme
+import kotlin.system.exitProcess
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +36,12 @@ class MainActivity : ComponentActivity() {
                     ) {
 
                         composable(Screen.GameStartScreen.route) {
-                            GameStartScreen(navController = navController)
+                            GameStartScreen(
+                                navController = navController,
+                                onFinishApp = {
+                                    exitProcess(0)
+                                }
+                            )
                         }
 
                         composable(Screen.GameMainScreen.route) {

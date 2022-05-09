@@ -31,7 +31,7 @@ import com.crownedjester.soft.whackamolegame.presentation.util.Screen
 import com.crownedjester.soft.whackamolegame.ui.theme.LightOrange
 
 @Composable
-fun GameStartScreen(navController: NavController) {
+fun GameStartScreen(navController: NavController, onFinishApp: () -> Unit) {
 
     var isRulesShown by remember { mutableStateOf(false) }
 
@@ -54,13 +54,17 @@ fun GameStartScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            GameStartButton(
+            GameStartButtonsStyle(
                 text = "Start",
                 onClick = { navController.navigate(Screen.GameMainScreen.route) })
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(BUTTON_SPACING.dp))
 
-            GameStartButton(text = "Rules", onClick = { isRulesShown = true })
+            GameStartButtonsStyle(text = "Rules", onClick = { isRulesShown = true })
+
+            Spacer(modifier = Modifier.height(BUTTON_SPACING.dp))
+
+            GameStartButtonsStyle(text = "Exit", onClick = onFinishApp)
 
             Spacer(modifier = Modifier.height(32.dp))
 
@@ -73,7 +77,7 @@ fun GameStartScreen(navController: NavController) {
 private fun RulesDialog(isShown: Boolean, onDialogDismiss: () -> Unit) {
     if (isShown) {
 
-        Row(modifier = Modifier.fillMaxSize(), verticalAlignment =Alignment.CenterVertically) {
+        Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
 
             Dialog(
                 onDismissRequest = onDialogDismiss,
@@ -120,7 +124,7 @@ private fun RulesDialog(isShown: Boolean, onDialogDismiss: () -> Unit) {
 }
 
 @Composable
-private fun GameStartButton(text: String, onClick: () -> Unit) {
+private fun GameStartButtonsStyle(text: String, onClick: () -> Unit) {
     TextButton(
         modifier = Modifier
             .size(196.dp, 48.dp)
@@ -140,3 +144,4 @@ private fun GameStartButton(text: String, onClick: () -> Unit) {
 }
 
 private const val BUTTON_CORNER_PERCENT = 24
+private const val BUTTON_SPACING = 16
