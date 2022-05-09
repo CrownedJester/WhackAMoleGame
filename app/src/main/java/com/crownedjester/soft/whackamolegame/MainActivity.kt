@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.crownedjester.soft.whackamolegame.presentation.game_screen.GameScreen
 import com.crownedjester.soft.whackamolegame.presentation.result_screen.ResultScreen
 import com.crownedjester.soft.whackamolegame.presentation.start_screen.GameStartScreen
@@ -46,11 +48,20 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        composable(Screen.GameMainScreen.route) {
-                            GameScreen()
+                        composable(
+                            route = Screen.GameMainScreen.route
+                        ) {
+                            GameScreen(navController = navController)
                         }
 
-                        composable(Screen.GameResultScreen.route) {
+                        composable(
+                            route = Screen.GameResultScreen.route + "?result={${Screen.RESULT_ARGUMENT_NAME}}",
+                            arguments = listOf(
+                                navArgument(Screen.RESULT_ARGUMENT_NAME) {
+                                    type = NavType.IntType
+                                }
+                            )
+                        ) {
                             ResultScreen(navController = navController)
                         }
 

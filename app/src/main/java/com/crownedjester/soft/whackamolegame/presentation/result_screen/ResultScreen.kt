@@ -15,6 +15,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Replay
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -32,16 +34,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.crownedjester.soft.whackamolegame.R
 import com.crownedjester.soft.whackamolegame.presentation.util.Screen
 import com.crownedjester.soft.whackamolegame.ui.theme.LightOrange
 
 @Composable
-fun ResultScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun ResultScreen(
+    modifier: Modifier = Modifier,
+    viewModel: ResultViewModel = hiltViewModel(),
+    navController: NavController
+) {
 
-//    val viewModel = viewModel<ResultViewModel>()
-
+    val record by viewModel.gameRecord.collectAsState()
+    val result by viewModel.gameResult.collectAsState()
 
     Box(
         modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -96,7 +103,7 @@ fun ResultScreen(modifier: Modifier = Modifier, navController: NavController) {
                         top.linkTo(menuText.bottom, DATA_TOP_MARGIN.dp)
                         start.linkTo(menuBackground.start, DATA_HORIZONTAL_MARGIN.dp)
                     },
-                text = "Record: 0",
+                text = "Record: $record",
                 style = MaterialTheme.typography.h6,
                 fontStyle = FontStyle.Italic
             )
@@ -107,7 +114,7 @@ fun ResultScreen(modifier: Modifier = Modifier, navController: NavController) {
                         top.linkTo(menuText.bottom, DATA_TOP_MARGIN.dp)
                         end.linkTo(menuBackground.end, DATA_HORIZONTAL_MARGIN.dp)
                     },
-                text = "Result: 0",
+                text = "Result: $result",
                 style = MaterialTheme.typography.h6,
                 fontStyle = FontStyle.Italic
             )

@@ -31,7 +31,10 @@ import com.crownedjester.soft.whackamolegame.presentation.util.Screen
 import com.crownedjester.soft.whackamolegame.ui.theme.LightOrange
 
 @Composable
-fun GameStartScreen(navController: NavController, onFinishApp: () -> Unit) {
+fun GameStartScreen(
+    navController: NavController,
+    onFinishApp: () -> Unit
+) {
 
     var isRulesShown by remember { mutableStateOf(false) }
 

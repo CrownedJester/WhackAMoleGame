@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -18,24 +19,35 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.crownedjester.soft.whackamolegame.R
 import com.crownedjester.soft.whackamolegame.presentation.game_screen.components.MoleItem
+import com.crownedjester.soft.whackamolegame.presentation.util.Screen
 import com.crownedjester.soft.whackamolegame.ui.theme.LightOrange
+import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GameScreen() {
-
-    val viewModel = viewModel<GameViewModel>()
+fun GameScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    viewModel: GameViewModel = hiltViewModel()
+) {
 
     val currentRevealedMoleState by viewModel.currentRevealedMole.collectAsState()
     val timerState = viewModel.timerStateFlow.collectAsState()
 
-    val count = viewModel.tappedMoleCount.value
+    val count by viewModel.tappedMoleCount
+
+    LaunchedEffect(key1 = viewModel.isGameEnd) {
+        viewModel.isGameEnd.collectLatest {
+            if (it) navController.navigate(Screen.GameResultScreen.route + "?result=$count")
+        }
+    }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ) {
         Image(

@@ -26,7 +26,7 @@ class DataStoreManager @Inject constructor(@ApplicationContext appContext: Conte
     override val record: Flow<Int>
         get() = dataStore.getValueAsFlow(
             Constants.RECORD_KEY,
-            1
+            0
         )
 
 
