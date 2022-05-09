@@ -15,8 +15,10 @@ import com.crownedjester.soft.whackamolegame.presentation.result_screen.ResultSc
 import com.crownedjester.soft.whackamolegame.presentation.start_screen.GameStartScreen
 import com.crownedjester.soft.whackamolegame.presentation.util.Screen
 import com.crownedjester.soft.whackamolegame.ui.theme.WhackAMoleGameTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.system.exitProcess
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
